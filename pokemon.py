@@ -1,4 +1,7 @@
+from os import curdir
 from random import randint
+
+from pkg_resources import compatible_platforms
 
 pokemon_list = ['Bulbasaur','Ivysaur','Venusaur','Charmander†','Charmeleon','Charizard','Squirtle','Wartortle','Blastoise','Caterpie','Metapod','Butterfree','Weedle','Kakuna','Beedrill','Pidgey','Pidgeotto','Pidgeot','Rattata','Raticate','Spearow','Fearow','Ekans','Arbok','Pikachudagger','Raichu','Sandshrew','Sandslash','Nidoran♀','Nidorina','Nidoqueen','Nidoran♂','Nidorino','Nidoking','Clefairy','Clefable','Vulpix','Ninetales','Jigglypuff','Wigglytuff','Zubat','Golbat','Oddish','Gloom','Vileplume','Paras','Parasect','Venonat','Venomoth','Diglett','Dugtrio','Meowth','Persian','Psyduck','Golduck','Mankey','Primeape','Growlithe','Arcanine','Poliwag','Poliwhirl','Poliwrath','Abra','Kadabra','Alakazam','Machop','Machoke','Machamp','Bellsprout','Weepinbell','Victreebel','Tentacool','Tentacruel','Geodude','Graveler','Golem','Ponyta','Rapidash','Slowpoke','Slowbro','Magnemite','Magneton','Farfetch','Doduo','Dodrio','Seel','Dewgong','Grimer','Muk','Shellder','Cloyster','Gastly','Haunter','Gengar','Onix','Drowzee','Hypno','Krabby','Kingler','Voltorb','Electrode','Exeggcute','Exeggutor','Cubone','Marowak','Hitmonlee','Hitmonchan','Lickitung','Koffing','Weezing','Rhyhorn','Rhydon','Chansey','Tangela','Kangaskhan','Horsea','Seadra','Goldeen','Seaking','Staryu','Starmie','Mr. Mime','Scyther','Jynx','Electabuzz','Magmar','Pinsir','Tauros','Magikarp','Gyarados','Lapras','Ditto','Eeveedagger','Vaporeon','Jolteon','Flareon','Porygon','Omanyte','Omastar','Kabuto','Kabutops','Aerodactyl','Snorlax','Articuno','Zapdos','Moltres','Dratini','Dragonair','Dragonite','Mewtwo','Mew']
 pokemon_type = ['Grass', 'Grass', 'Grass', 'Fire', 'Fire', 'Fire', 'Water', 'Water', 'Water', 'Bug', 'Bug', 'Bug', 'Bug', 'Bug', 'Bug', 'Normal', 'Normal', 'Normal', 'Normal', 'Normal', 'Normal', 'Normal', 'Poison', 'Poison', 'Electric', 'Electric', 'Ground', 'Ground', 'Poison', 'Poison', 'Poison', 'Poison', 'Poison', 'Poison', 'Fairy', 'Fairy', 'Fire', 'Fire', 'Normal', 'Normal', 'Poison', 'Poison', 'Grass', 'Grass', 'Grass', 'Bug', 'Bug', 'Bug', 'Bug', 'Ground', 'Ground', 'Normal', 'Normal', 'Water', 'Water', 'Fighting', 'Fighting', 'Fire', 'Fire', 'Water', 'Water', 'Water', 'Psychic', 'Psychic', 'Psychic', 'Fighting', 'Fighting', 'Fighting', 'Grass', 'Grass', 'Grass', 'Water', 'Water', 'Rock', 'Rock', 'Rock', 'Fire', 'Fire', 'Water', 'Water', 'Electric', 'Electric', 'Normal', 'Normal', 'Normal', 'Water', 'Water', 'Poison', 'Poison', 'Water', 'Water', 'Ghost', 'Ghost', 'Ghost', 'Rock', 'Psychic', 'Psychic', 'Water', 'Water', 'Electric', 'Electric', 'Grass', 'Grass', 'Ground', 'Ground', 'Fighting', 'Fighting', 'Normal', 'Poison', 'Poison', 'Ground', 'Ground', 'Normal', 'Grass', 'Normal', 'Water', 'Water', 'Water', 'Water', 'Water', 'Water', 'Psychic', 'Bug', 'Ice', 'Electric', 'Fire', 'Bug', 'Normal', 'Water', 'Water', 'Water', 'Normal', 'Normal', 'Water', 'Electric', 'Fire', 'Normal', 'Rock', 'Rock', 'Rock', 'Rock', 'Rock', 'Normal', 'Ice', 'Electric', 'Fire', 'Dragon', 'Dragon', 'Dragon', 'Psychic', 'Psychic']
@@ -17,6 +20,49 @@ class Player:
             print(pokemon)
         print('{name} currently has {potions} potions'.format(name = self.name, potions = self.potions))
         return('The current active pokemon is {pokemon}'.format(pokemon = self.pokemons[self.current_pokemon].name))
+
+    def switch_pokemon(self):
+        print('What pokemon do you want to choose as your active pokemon now?\n')
+        print('Write the number next to the pokemon you want to choose.\n')
+        index = 1
+        for pokemon in self.pokemons:
+            print (index, pokemon.name)
+            index += 1
+        active = int(input('\n')) - 1
+        self.current_pokemon = active
+        print('{Trainer} your new active pokemon is {active_pokemon}'.format(Trainer = self.name, active_pokemon = self.pokemons[self.current_pokemon].name))
+    """
+    def switch_active_pokemon(self, new_active):
+        # Switches the active pokemon to the number given as a parameter
+        # First checks to see the number is valid (between 0 and the length of the list)
+        if new_active < len(self.pokemons) and new_active >= 0:
+            # You can't switch to a pokemon that is knocked out
+            if self.pokemons[new_active].is_knocked_out:
+                print("{name} is knocked out. You can't make it your active pokemon".format(name = self.pokemons[new_active].name))
+            # You can't switch to your current pokemon
+            elif new_active == self.current_pokemon:
+                print("{name} is already your active pokemon".format(name = self.pokemons[new_active].name))
+            # Switches the pokemon
+            else:
+                self.current_pokemon = new_active
+                print("Go {name}, it's your turn!".format(name = self.pokemons[self.current_pokemon].name))
+
+    def use_potion(self):
+        # Uses a potion on the active pokemon, assuming you have at least one potion.
+        if self.potions > 0:
+            print("You used a potion on {name}.".format(name = self.pokemons[self.current_pokemon].name))
+            # A potion restores 20 health
+            self.pokemons[self.current_pokemon].gain_health(20)
+            self.potions -= 1
+        else:
+            print("You don't have any more potions")
+
+    def attack_other_trainer(self, other_trainer):
+        # Your current pokemon attacks the other trainer's current pokemon
+        my_pokemon = self.pokemons[self.current_pokemon]
+        their_pokemon = other_trainer.pokemons[other_trainer.current_pokemon]
+        my_pokemon.attack(their_pokemon)
+    """
 
 
 class Pokemon:
@@ -113,10 +159,31 @@ def menu():
 
     # Decide who will have the first turn by guessing heads or tails
     print('\nNow let\'s decide who will have the first turn by tossing a coin.')
-    first_turn = coinflip(player_one.name, player_two.name)
-    print(first_turn)
+    turn = coinflip(player_one.name, player_two.name)
+    turn = 1
     # Create logic for turn base combat between both trainers
-    
+    combat = True
+    while combat == True:
+        if turn == 1:
+            decision = int(input('It\'s your turn {trainer1} your current active pokemon is {active_pokemon} what do you want to do?\n1. Attack\n2. Use potion\n3. Change Pokemon\n'.format(trainer1 = player_one.name, active_pokemon = player_one.pokemons[player_one.current_pokemon].name)))
+            match decision:
+                case 1: print ('Attack!')
+                case 2: print ('Use potion')
+                case 3: 
+                    player_one.switch_pokemon()
+
+            turn = 2
+        elif turn == 2:
+            decision = int(input('It\'s your turn {trainer2} your current active pokemon is {active_pokemon} what do you want to do?\n1. Attack\n2. Use potion\n3. Change Pokemon\n'.format(trainer2 = player_two.name, active_pokemon = player_two.pokemons[player_two.current_pokemon].name)))
+            match decision:
+                case 1: print ('Attack!')
+                case 2: print ('Use potion')
+                case 3: 
+                    player_two.switch_pokemon()
+            turn = 1
+            # combat = False
+
+
 
 menu()
 
