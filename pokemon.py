@@ -70,6 +70,35 @@ def create_player():
 
     return (Player(name, trainer_pokemon, randint(1,5)))
 
+def coinflip(name1, name2):
+    random_number = randint(1,2)
+    Head_Tails = ""
+    #Promp the user for their guess
+    while True:
+        try:
+            guess = input("{player} write your guess, Heads or Tails\n".format(player = name1))
+            guess = guess.upper().strip()
+            if guess == 'HEADS' or guess == 'TAILS': break
+            print ('Please write, Heads or Tails as your guess')
+        except ValueError:
+            print('Sorry we didn\'t get your guess please write it again.')
+
+
+    #Depending on the random number generated we define the correct Head_Tails
+
+    Head_Tails = "HEADS" if random_number == 1 else "TAILS"
+
+    print("\nCoin landed on:", str(Head_Tails.capitalize()))
+    print ("\nYour guess was...", str(guess.capitalize()))
+
+    if guess == Head_Tails:
+        print ("\n{player} won the coin flip you will go first".format(player = name1))
+        return 1
+    else: 
+        print("\n{playerone} lost the coin flip {playertwo} will go first".format(playerone = name1, playertwo = name2))
+        return 2
+
+
 def menu():
     print('Welcome to pokemon random battle, in this game two trainers will receive 5 random pokemon and a random number of potions to battle each other\nI hope you have good luck!\n')
     print('Let\'s start with trainer #1\n')
@@ -83,6 +112,9 @@ def menu():
     print(player_two)
 
     # Decide who will have the first turn by guessing heads or tails
+    print('\nNow let\'s decide who will have the first turn by tossing a coin.')
+    first_turn = coinflip(player_one.name, player_two.name)
+    print(first_turn)
     # Create logic for turn base combat between both trainers
     
 
