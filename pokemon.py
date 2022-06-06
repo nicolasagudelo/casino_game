@@ -1,8 +1,6 @@
 from os import curdir
 from random import randint
 
-from pkg_resources import compatible_platforms
-
 pokemon_list = ['Bulbasaur','Ivysaur','Venusaur','Charmander†','Charmeleon','Charizard','Squirtle','Wartortle','Blastoise','Caterpie','Metapod','Butterfree','Weedle','Kakuna','Beedrill','Pidgey','Pidgeotto','Pidgeot','Rattata','Raticate','Spearow','Fearow','Ekans','Arbok','Pikachudagger','Raichu','Sandshrew','Sandslash','Nidoran♀','Nidorina','Nidoqueen','Nidoran♂','Nidorino','Nidoking','Clefairy','Clefable','Vulpix','Ninetales','Jigglypuff','Wigglytuff','Zubat','Golbat','Oddish','Gloom','Vileplume','Paras','Parasect','Venonat','Venomoth','Diglett','Dugtrio','Meowth','Persian','Psyduck','Golduck','Mankey','Primeape','Growlithe','Arcanine','Poliwag','Poliwhirl','Poliwrath','Abra','Kadabra','Alakazam','Machop','Machoke','Machamp','Bellsprout','Weepinbell','Victreebel','Tentacool','Tentacruel','Geodude','Graveler','Golem','Ponyta','Rapidash','Slowpoke','Slowbro','Magnemite','Magneton','Farfetch','Doduo','Dodrio','Seel','Dewgong','Grimer','Muk','Shellder','Cloyster','Gastly','Haunter','Gengar','Onix','Drowzee','Hypno','Krabby','Kingler','Voltorb','Electrode','Exeggcute','Exeggutor','Cubone','Marowak','Hitmonlee','Hitmonchan','Lickitung','Koffing','Weezing','Rhyhorn','Rhydon','Chansey','Tangela','Kangaskhan','Horsea','Seadra','Goldeen','Seaking','Staryu','Starmie','Mr. Mime','Scyther','Jynx','Electabuzz','Magmar','Pinsir','Tauros','Magikarp','Gyarados','Lapras','Ditto','Eeveedagger','Vaporeon','Jolteon','Flareon','Porygon','Omanyte','Omastar','Kabuto','Kabutops','Aerodactyl','Snorlax','Articuno','Zapdos','Moltres','Dratini','Dragonair','Dragonite','Mewtwo','Mew']
 pokemon_type = ['Grass', 'Grass', 'Grass', 'Fire', 'Fire', 'Fire', 'Water', 'Water', 'Water', 'Bug', 'Bug', 'Bug', 'Bug', 'Bug', 'Bug', 'Normal', 'Normal', 'Normal', 'Normal', 'Normal', 'Normal', 'Normal', 'Poison', 'Poison', 'Electric', 'Electric', 'Ground', 'Ground', 'Poison', 'Poison', 'Poison', 'Poison', 'Poison', 'Poison', 'Fairy', 'Fairy', 'Fire', 'Fire', 'Normal', 'Normal', 'Poison', 'Poison', 'Grass', 'Grass', 'Grass', 'Bug', 'Bug', 'Bug', 'Bug', 'Ground', 'Ground', 'Normal', 'Normal', 'Water', 'Water', 'Fighting', 'Fighting', 'Fire', 'Fire', 'Water', 'Water', 'Water', 'Psychic', 'Psychic', 'Psychic', 'Fighting', 'Fighting', 'Fighting', 'Grass', 'Grass', 'Grass', 'Water', 'Water', 'Rock', 'Rock', 'Rock', 'Fire', 'Fire', 'Water', 'Water', 'Electric', 'Electric', 'Normal', 'Normal', 'Normal', 'Water', 'Water', 'Poison', 'Poison', 'Water', 'Water', 'Ghost', 'Ghost', 'Ghost', 'Rock', 'Psychic', 'Psychic', 'Water', 'Water', 'Electric', 'Electric', 'Grass', 'Grass', 'Ground', 'Ground', 'Fighting', 'Fighting', 'Normal', 'Poison', 'Poison', 'Ground', 'Ground', 'Normal', 'Grass', 'Normal', 'Water', 'Water', 'Water', 'Water', 'Water', 'Water', 'Psychic', 'Bug', 'Ice', 'Electric', 'Fire', 'Bug', 'Normal', 'Water', 'Water', 'Water', 'Normal', 'Normal', 'Water', 'Electric', 'Fire', 'Normal', 'Rock', 'Rock', 'Rock', 'Rock', 'Rock', 'Normal', 'Ice', 'Electric', 'Fire', 'Dragon', 'Dragon', 'Dragon', 'Psychic', 'Psychic']
 
@@ -22,31 +20,42 @@ class Player:
         return('The current active pokemon is {pokemon}'.format(pokemon = self.pokemons[self.current_pokemon].name))
 
     def switch_pokemon(self):
-        print('What pokemon do you want to choose as your active pokemon now?\n')
-        print('Write the number next to the pokemon you want to choose.\n')
-        index = 1
-        for pokemon in self.pokemons:
-            print (index, pokemon.name)
-            index += 1
-        active = int(input('\n')) - 1
-        self.current_pokemon = active
-        print('{Trainer} your new active pokemon is {active_pokemon}'.format(Trainer = self.name, active_pokemon = self.pokemons[self.current_pokemon].name))
+        while True:
+            print('What pokemon do you want to choose as your active pokemon now?\n')
+            print('Write the number next to the pokemon you want to choose.\n')
+            index = 1
+            # We let the player know what pokemons he have and in which position they are so he can choose which pokemon he want to set as active
+            for pokemon in self.pokemons:
+                if pokemon.isFaint == True:
+                    print (index, pokemon.name, 'level:', pokemon.level ,'(fainted)') 
+                else:
+                    print (index, pokemon.name, 'level:', pokemon.level)
+                index += 1
+            try:
+                active = int(input('\n')) - 1
+                # we check that the number is not lower than 0 and not greater than the size of the list with the pokemons
+                if active < 0 or active >= len(self.pokemons):
+                    # We let the player know that his input was not valid
+                    print('That number doesn\'t correspond to any pokemon, please write a valid number')
+                    continue
+                # We check that the pokemon that the trainer chose is not fainted.
+                elif self.pokemons[active].isFaint:
+                    # We let him know that the selected pokemon has 0 hp and can not fight.
+                    print('{pokemon} is out of hp and can\'t fight, choose another active pokemon'.format(pokemon = self.pokemons[active].name))
+                    continue
+                # We check that he doesn't choose the pokemon that he is already using.
+                elif active == self.current_pokemon:
+                    # We let him know that he chose the same pokemon he already has as active pokemon.
+                    print('{pokemon} is already your active pokemon, choose a different pokemon to switch to'.format(pokemon = self.pokemons[active].name))
+                    continue
+                # If everything is okay we change the active pokemon.
+                else: 
+                    self.current_pokemon = active
+                    print('{trainer}: Go {pokemon} I choose you!'.format(trainer = self.name, pokemon = self.pokemons[self.current_pokemon].name))
+                    break
+            except ValueError:
+                print('Please choose using only numbers. Select the pokemon you want by typing the number next to it\'s name')
     """
-    def switch_active_pokemon(self, new_active):
-        # Switches the active pokemon to the number given as a parameter
-        # First checks to see the number is valid (between 0 and the length of the list)
-        if new_active < len(self.pokemons) and new_active >= 0:
-            # You can't switch to a pokemon that is knocked out
-            if self.pokemons[new_active].is_knocked_out:
-                print("{name} is knocked out. You can't make it your active pokemon".format(name = self.pokemons[new_active].name))
-            # You can't switch to your current pokemon
-            elif new_active == self.current_pokemon:
-                print("{name} is already your active pokemon".format(name = self.pokemons[new_active].name))
-            # Switches the pokemon
-            else:
-                self.current_pokemon = new_active
-                print("Go {name}, it's your turn!".format(name = self.pokemons[self.current_pokemon].name))
-
     def use_potion(self):
         # Uses a potion on the active pokemon, assuming you have at least one potion.
         if self.potions > 0:
@@ -108,7 +117,7 @@ def create_player():
     trainer_pokemon = []
     for i in range(0,5,1):
         position = randint(0,150)
-        level = randint(0,10)
+        level = randint(1,10)
         trainer_pokemon.append(Pokemon(pokemon_list[position],pokemon_type[position], name, level))
 
 
