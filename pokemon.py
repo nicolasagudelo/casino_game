@@ -1,4 +1,4 @@
-from os import curdir
+
 from random import randint
 
 pokemon_list = ['Bulbasaur','Ivysaur','Venusaur','Charmander†','Charmeleon','Charizard','Squirtle','Wartortle','Blastoise','Caterpie','Metapod','Butterfree','Weedle','Kakuna','Beedrill','Pidgey','Pidgeotto','Pidgeot','Rattata','Raticate','Spearow','Fearow','Ekans','Arbok','Pikachudagger','Raichu','Sandshrew','Sandslash','Nidoran♀','Nidorina','Nidoqueen','Nidoran♂','Nidorino','Nidoking','Clefairy','Clefable','Vulpix','Ninetales','Jigglypuff','Wigglytuff','Zubat','Golbat','Oddish','Gloom','Vileplume','Paras','Parasect','Venonat','Venomoth','Diglett','Dugtrio','Meowth','Persian','Psyduck','Golduck','Mankey','Primeape','Growlithe','Arcanine','Poliwag','Poliwhirl','Poliwrath','Abra','Kadabra','Alakazam','Machop','Machoke','Machamp','Bellsprout','Weepinbell','Victreebel','Tentacool','Tentacruel','Geodude','Graveler','Golem','Ponyta','Rapidash','Slowpoke','Slowbro','Magnemite','Magneton','Farfetch','Doduo','Dodrio','Seel','Dewgong','Grimer','Muk','Shellder','Cloyster','Gastly','Haunter','Gengar','Onix','Drowzee','Hypno','Krabby','Kingler','Voltorb','Electrode','Exeggcute','Exeggutor','Cubone','Marowak','Hitmonlee','Hitmonchan','Lickitung','Koffing','Weezing','Rhyhorn','Rhydon','Chansey','Tangela','Kangaskhan','Horsea','Seadra','Goldeen','Seaking','Staryu','Starmie','Mr. Mime','Scyther','Jynx','Electabuzz','Magmar','Pinsir','Tauros','Magikarp','Gyarados','Lapras','Ditto','Eeveedagger','Vaporeon','Jolteon','Flareon','Porygon','Omanyte','Omastar','Kabuto','Kabutops','Aerodactyl','Snorlax','Articuno','Zapdos','Moltres','Dratini','Dragonair','Dragonite','Mewtwo','Mew']
@@ -29,7 +29,7 @@ class Player:
                 if pokemon.isFaint == True:
                     print (index, pokemon.name, 'level:', pokemon.level ,'(fainted)') 
                 else:
-                    print (index, pokemon.name, 'level:', pokemon.level)
+                    print (index, pokemon.name, 'level:', pokemon.level, 'current HP:', pokemon.health,'/',pokemon.max_health)
                 index += 1
             try:
                 active = int(input('\n')) - 1
@@ -55,9 +55,44 @@ class Player:
                     break
             except ValueError:
                 print('Please choose using only numbers. Select the pokemon you want by typing the number next to it\'s name')
-    """
+    
     def use_potion(self):
         # Uses a potion on the active pokemon, assuming you have at least one potion.
+        if self.potions > 0:
+            while True:
+                print('On which pokemon do you want to use the potion? (In this game you can revive your pokemon using potions)\n')
+                print('Write the number next to the pokemon you want to choose.\n')
+                index = 1
+                # We let the player know what pokemons he have and in which position they are so he can choose on which pokemon he wants to use the potion.
+                for pokemon in self.pokemons:
+                    if pokemon.isFaint == True:
+                        print (index, pokemon.name, 'level:', pokemon.level ,'(fainted)') 
+                    else:
+                        print (index, pokemon.name, 'level:', pokemon.level, 'current HP:', pokemon.health,'/',pokemon.max_health)
+                    index += 1
+                try:
+                    pokemon_to_use_potion = int(input('\n')) - 1
+                    # we check that the number is not lower than 0 and not greater than the size of the list with the pokemons
+                    if pokemon_to_use_potion < 0 or pokemon_to_use_potion >= len(self.pokemons):
+                        # We let the player know that his input was not valid
+                        print('That number doesn\'t correspond to any pokemon, please write a valid number')
+                        continue
+                    # If everything is okay we give the potion to the pokemon.
+                    else:
+                        # If the pokemon is at it's current maximum HP we inform the trainer and don't make him lose his turn
+                        if self.pokemons[pokemon_to_use_potion].health == self.pokemons[pokemon_to_use_potion].max_health:
+                            print('This pokemon already has the maximum amount of hp it can get, don\'t worry, you won\'t lose your turn.')
+                            return False
+                        else:
+                        # If we get here we give the potion to the pokemon and reduce the amount of potions that the trainer has by 1
+                            self.pokemons[pokemon_to_use_potion].gainhealth()
+                            self.potions -= 1
+                            return True
+                            break
+                except ValueError:
+                    print('Please choose using only numbers. Select the pokemon you want by typing the number next to it\'s name')
+        else: print('You don\'t have any potions left.')
+
         if self.potions > 0:
             print("You used a potion on {name}.".format(name = self.pokemons[self.current_pokemon].name))
             # A potion restores 20 health
@@ -65,7 +100,7 @@ class Player:
             self.potions -= 1
         else:
             print("You don't have any more potions")
-
+    """
     def attack_other_trainer(self, other_trainer):
         # Your current pokemon attacks the other trainer's current pokemon
         my_pokemon = self.pokemons[self.current_pokemon]
@@ -90,6 +125,26 @@ class Pokemon:
     def __repr__(self) -> str:
         # Printing a pokemon will tell us it's name, level, current health, and type
         return ('{name} is a level {level} {type} pokemon, his current health is {current_health} out of {full_health}'.format(name = self.name, level = self.level, type = self.type, current_health = self.health, full_health = self.max_health))
+    
+    def gainhealth(self):
+        # If a pokemon has no health he will be revived.
+        if self.health == 0:
+            self.revive()
+            self.health += 19
+        else:
+            self.health += 20 
+        if self.health > self.max_health:
+            self.health = self.max_health
+        print ('{name} now has {health} hp'.format(name = self.name, health = self.health))
+        
+    
+
+    def revive(self):
+        # We change the is faint boolean to false since the pokemon is no longer out of combat
+        self.isFaint = False
+        if self.health == 0:
+            self.health = 1
+        print('{name} has been revived'.format(name = self.name))
         
 
 
@@ -177,16 +232,19 @@ def menu():
             decision = int(input('It\'s your turn {trainer1} your current active pokemon is {active_pokemon} what do you want to do?\n1. Attack\n2. Use potion\n3. Change Pokemon\n'.format(trainer1 = player_one.name, active_pokemon = player_one.pokemons[player_one.current_pokemon].name)))
             match decision:
                 case 1: print ('Attack!')
-                case 2: print ('Use potion')
+                case 2: 
+                    potion_was_used = player_one.use_potion()
+                    if not potion_was_used: continue
                 case 3: 
                     player_one.switch_pokemon()
-
             turn = 2
         elif turn == 2:
             decision = int(input('It\'s your turn {trainer2} your current active pokemon is {active_pokemon} what do you want to do?\n1. Attack\n2. Use potion\n3. Change Pokemon\n'.format(trainer2 = player_two.name, active_pokemon = player_two.pokemons[player_two.current_pokemon].name)))
             match decision:
                 case 1: print ('Attack!')
-                case 2: print ('Use potion')
+                case 2:
+                    potion_was_used = player_two.use_potion()
+                    if not potion_was_used: continue
                 case 3: 
                     player_two.switch_pokemon()
             turn = 1
