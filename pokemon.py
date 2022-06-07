@@ -1,7 +1,8 @@
 
 from random import randint
+from random import random
 
-pokemon_list = ['Bulbasaur','Ivysaur','Venusaur','Charmander†','Charmeleon','Charizard','Squirtle','Wartortle','Blastoise','Caterpie','Metapod','Butterfree','Weedle','Kakuna','Beedrill','Pidgey','Pidgeotto','Pidgeot','Rattata','Raticate','Spearow','Fearow','Ekans','Arbok','Pikachudagger','Raichu','Sandshrew','Sandslash','Nidoran♀','Nidorina','Nidoqueen','Nidoran♂','Nidorino','Nidoking','Clefairy','Clefable','Vulpix','Ninetales','Jigglypuff','Wigglytuff','Zubat','Golbat','Oddish','Gloom','Vileplume','Paras','Parasect','Venonat','Venomoth','Diglett','Dugtrio','Meowth','Persian','Psyduck','Golduck','Mankey','Primeape','Growlithe','Arcanine','Poliwag','Poliwhirl','Poliwrath','Abra','Kadabra','Alakazam','Machop','Machoke','Machamp','Bellsprout','Weepinbell','Victreebel','Tentacool','Tentacruel','Geodude','Graveler','Golem','Ponyta','Rapidash','Slowpoke','Slowbro','Magnemite','Magneton','Farfetch','Doduo','Dodrio','Seel','Dewgong','Grimer','Muk','Shellder','Cloyster','Gastly','Haunter','Gengar','Onix','Drowzee','Hypno','Krabby','Kingler','Voltorb','Electrode','Exeggcute','Exeggutor','Cubone','Marowak','Hitmonlee','Hitmonchan','Lickitung','Koffing','Weezing','Rhyhorn','Rhydon','Chansey','Tangela','Kangaskhan','Horsea','Seadra','Goldeen','Seaking','Staryu','Starmie','Mr. Mime','Scyther','Jynx','Electabuzz','Magmar','Pinsir','Tauros','Magikarp','Gyarados','Lapras','Ditto','Eeveedagger','Vaporeon','Jolteon','Flareon','Porygon','Omanyte','Omastar','Kabuto','Kabutops','Aerodactyl','Snorlax','Articuno','Zapdos','Moltres','Dratini','Dragonair','Dragonite','Mewtwo','Mew']
+pokemon_list = ['Bulbasaur','Ivysaur','Venusaur','Charmander†','Charmeleon','Charizard','Squirtle','Wartortle','Blastoise','Caterpie','Metapod','Butterfree','Weedle','Kakuna','Beedrill','Pidgey','Pidgeotto','Pidgeot','Rattata','Raticate','Spearow','Fearow','Ekans','Arbok','Pikachu','Raichu','Sandshrew','Sandslash','Nidoran♀','Nidorina','Nidoqueen','Nidoran♂','Nidorino','Nidoking','Clefairy','Clefable','Vulpix','Ninetales','Jigglypuff','Wigglytuff','Zubat','Golbat','Oddish','Gloom','Vileplume','Paras','Parasect','Venonat','Venomoth','Diglett','Dugtrio','Meowth','Persian','Psyduck','Golduck','Mankey','Primeape','Growlithe','Arcanine','Poliwag','Poliwhirl','Poliwrath','Abra','Kadabra','Alakazam','Machop','Machoke','Machamp','Bellsprout','Weepinbell','Victreebel','Tentacool','Tentacruel','Geodude','Graveler','Golem','Ponyta','Rapidash','Slowpoke','Slowbro','Magnemite','Magneton','Farfetch','Doduo','Dodrio','Seel','Dewgong','Grimer','Muk','Shellder','Cloyster','Gastly','Haunter','Gengar','Onix','Drowzee','Hypno','Krabby','Kingler','Voltorb','Electrode','Exeggcute','Exeggutor','Cubone','Marowak','Hitmonlee','Hitmonchan','Lickitung','Koffing','Weezing','Rhyhorn','Rhydon','Chansey','Tangela','Kangaskhan','Horsea','Seadra','Goldeen','Seaking','Staryu','Starmie','Mr. Mime','Scyther','Jynx','Electabuzz','Magmar','Pinsir','Tauros','Magikarp','Gyarados','Lapras','Ditto','Eeveedagger','Vaporeon','Jolteon','Flareon','Porygon','Omanyte','Omastar','Kabuto','Kabutops','Aerodactyl','Snorlax','Articuno','Zapdos','Moltres','Dratini','Dragonair','Dragonite','Mewtwo','Mew']
 pokemon_type = ['Grass', 'Grass', 'Grass', 'Fire', 'Fire', 'Fire', 'Water', 'Water', 'Water', 'Bug', 'Bug', 'Bug', 'Bug', 'Bug', 'Bug', 'Normal', 'Normal', 'Normal', 'Normal', 'Normal', 'Normal', 'Normal', 'Poison', 'Poison', 'Electric', 'Electric', 'Ground', 'Ground', 'Poison', 'Poison', 'Poison', 'Poison', 'Poison', 'Poison', 'Fairy', 'Fairy', 'Fire', 'Fire', 'Normal', 'Normal', 'Poison', 'Poison', 'Grass', 'Grass', 'Grass', 'Bug', 'Bug', 'Bug', 'Bug', 'Ground', 'Ground', 'Normal', 'Normal', 'Water', 'Water', 'Fighting', 'Fighting', 'Fire', 'Fire', 'Water', 'Water', 'Water', 'Psychic', 'Psychic', 'Psychic', 'Fighting', 'Fighting', 'Fighting', 'Grass', 'Grass', 'Grass', 'Water', 'Water', 'Rock', 'Rock', 'Rock', 'Fire', 'Fire', 'Water', 'Water', 'Electric', 'Electric', 'Normal', 'Normal', 'Normal', 'Water', 'Water', 'Poison', 'Poison', 'Water', 'Water', 'Ghost', 'Ghost', 'Ghost', 'Rock', 'Psychic', 'Psychic', 'Water', 'Water', 'Electric', 'Electric', 'Grass', 'Grass', 'Ground', 'Ground', 'Fighting', 'Fighting', 'Normal', 'Poison', 'Poison', 'Ground', 'Ground', 'Normal', 'Grass', 'Normal', 'Water', 'Water', 'Water', 'Water', 'Water', 'Water', 'Psychic', 'Bug', 'Ice', 'Electric', 'Fire', 'Bug', 'Normal', 'Water', 'Water', 'Water', 'Normal', 'Normal', 'Water', 'Electric', 'Fire', 'Normal', 'Rock', 'Rock', 'Rock', 'Rock', 'Rock', 'Normal', 'Ice', 'Electric', 'Fire', 'Dragon', 'Dragon', 'Dragon', 'Psychic', 'Psychic']
 
 class Player:
@@ -100,17 +101,16 @@ class Player:
             self.potions -= 1
         else:
             print("You don't have any more potions")
-    """
-    def attack_other_trainer(self, other_trainer):
+    
+    def attack_other_player(self, other_player):
         # Your current pokemon attacks the other trainer's current pokemon
         my_pokemon = self.pokemons[self.current_pokemon]
-        their_pokemon = other_trainer.pokemons[other_trainer.current_pokemon]
-        my_pokemon.attack(their_pokemon)
-    """
+        their_pokemon = other_player.pokemons[other_player.current_pokemon]
+        my_pokemon.attack_other_pokemon(their_pokemon)
 
 
 class Pokemon:
-    def __init__(self, name, type, owner, level = 1):
+    def __init__(self, name, type, owner, level = 5):
         self.name = name
         self.level = level
         self.health = level * 5
@@ -145,8 +145,222 @@ class Pokemon:
         if self.health == 0:
             self.health = 1
         print('{name} has been revived'.format(name = self.name))
-        
+    
+    def dodge(self):
+        if ((random()*100) < self.speed):
+            return True
+        return False
 
+    def lose_health(self, damage):
+        # We calculate the damage to the pokemon after the attack
+        self.health -= damage
+        # Check if the pokemon fainted
+        if self.health <=0:
+            self.health = 0
+            self.Faint()
+        else:
+            print('{pokemon} has taken {damage} damage, it has {health} points remaining'.format(pokemon = self.name, damage = damage, health = self.health))
+
+
+    def Faint(self):
+        self.isFaint = True
+        if self.health != 0:
+            self.health = 0
+        print('{pokemon} has taken too much damage and can not continue fighting'.format(pokemon = self.name))
+
+
+
+    def attack_other_pokemon(self, other_pokemon):
+        dodge = other_pokemon.dodge()
+        if dodge:
+            print ('{pokemon_attacked} is too fast!, he dodged {attacker} attack!'.format(pokemon_attacked = other_pokemon.name, attacker = self.name))
+        else:
+            # Add logic to check the types of both pokemons and calculate the damage taking into account advantages and disadvantages.
+            match self.type:
+                case 'Normal':
+                    if other_pokemon.type == 'Rock':
+                        print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
+                        print('Is not very effective!')
+                        other_pokemon.lose_health(self.attack * 0.5)
+                    elif other_pokemon.type == 'Ghost':
+                        print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
+                        immune(other_pokemon.name, self.name)
+                    else: 
+                        print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
+                        other_pokemon.lose_health(self.attack)
+                case 'Fire':
+                    if other_pokemon.type == 'Fire' or other_pokemon.type == 'Water' or other_pokemon.type == 'Rock' or other_pokemon.type == 'Dragon':
+                        print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
+                        print('Is not very effective!')
+                        other_pokemon.lose_health(self.attack * 0.5)
+                    elif other_pokemon.type == 'Grass' or other_pokemon.type == 'Ice' or other_pokemon.type == 'Bug':
+                        print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
+                        print('Is super effective!')
+                        other_pokemon.lose_health(self.attack * 2)
+                    else:
+                        print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
+                        other_pokemon.lose_health(self.attack)
+                case 'Water':
+                    if other_pokemon.type == 'Water' or other_pokemon.type == 'Grass' or other_pokemon.type == 'Dragon':
+                        print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
+                        print('Is not very effective!')
+                        other_pokemon.lose_health(self.attack * 0.5)
+                    elif other_pokemon.type == 'Fire' or other_pokemon.type == 'Ground' or other_pokemon.type == 'Rock':
+                        print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
+                        print('Is super effective!')
+                        other_pokemon.lose_health(self.attack * 2)
+                    else:
+                        print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
+                        other_pokemon.lose_health(self.attack)
+                case 'Electric':
+                    if other_pokemon.type == 'Electric' or  other_pokemon.type == 'Grass' or  other_pokemon.type == 'Dragon':
+                        print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
+                        print('Is not very effective!')
+                        other_pokemon.lose_health(self.attack * 0.5)
+                    elif  other_pokemon.type == 'Water' or  other_pokemon.type == 'Flying':
+                        print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
+                        print('Is super effective!')
+                        other_pokemon.lose_health(self.attack * 2)
+                    elif other_pokemon.type == 'Ground':
+                        immune(other_pokemon.name, self.name)
+                    else:
+                        print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
+                        other_pokemon.lose_health(self.attack)
+                case 'Grass':
+                    if other_pokemon.type == 'Fire' or other_pokemon.type == 'Grass' or  other_pokemon.type == 'Poison' or  other_pokemon.type == 'Flying' or  other_pokemon.type == 'Bug' or  other_pokemon.type == 'Dragon':
+                        print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
+                        print('Is not very effective!')
+                        other_pokemon.lose_health(self.attack * 0.5)
+                    elif  other_pokemon.type == 'Water' or  other_pokemon.type == 'Ground' or  other_pokemon.type == 'Rock':
+                        print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
+                        print('Is super effective!')
+                        other_pokemon.lose_health(self.attack * 2)
+                    else:
+                        print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
+                        other_pokemon.lose_health(self.attack)
+                case 'Ice':
+                    if other_pokemon.type == 'Water' or other_pokemon.type == 'Ice':
+                        print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
+                        print('Is not very effective!')
+                        other_pokemon.lose_health(self.attack * 0.5)
+                    elif other_pokemon.type == 'Grass' or other_pokemon.type == 'Ground' or other_pokemon.type == 'Flying' or other_pokemon.type == 'Dragon':
+                        print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
+                        print('Is super effective!')
+                        other_pokemon.lose_health(self.attack * 2)
+                    else:
+                        print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
+                        other_pokemon.lose_health(self.attack)
+                case 'Fighting':
+                    if other_pokemon.type == 'Poison' or  other_pokemon.type == 'Flying' or  other_pokemon.type == 'Psychic' or other_pokemon.type == 'Bug':
+                        print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
+                        print('Is not very effective!')
+                        other_pokemon.lose_health(self.attack * 0.5)
+                    elif other_pokemon.type == 'Normal' or  other_pokemon.type == 'Ice' or  other_pokemon.type == 'Rock':
+                        print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
+                        print('Is super effective!')
+                        other_pokemon.lose_health(self.attack * 2)
+                    elif other_pokemon.type == 'Ghost':
+                        immune(other_pokemon.name, self.name)
+                    else:
+                        print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
+                        other_pokemon.lose_health(self.attack)
+                case 'Poison':
+                    if  other_pokemon.type == 'Poison' or  other_pokemon.type == 'Ground' or  other_pokemon.type == 'Rock' or  other_pokemon.type == 'Ghost':
+                        print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
+                        print('Is not very effective!')
+                        other_pokemon.lose_health(self.attack * 0.5)
+                    elif  other_pokemon.type == 'Grass' or  other_pokemon.type == 'Bug':
+                        print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
+                        print('Is super effective!')
+                        other_pokemon.lose_health(self.attack * 2)
+                    else:
+                        print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
+                        other_pokemon.lose_health(self.attack)
+                case 'Ground':
+                    if other_pokemon.type == 'Grass' or other_pokemon.type == 'Bug':
+                        print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
+                        print('Is not very effective!')
+                        other_pokemon.lose_health(self.attack * 0.5)
+                    elif other_pokemon.type == 'Fire' or other_pokemon.type == 'Electric' or other_pokemon.type == 'Poison' or other_pokemon.type == 'Rock':
+                        print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
+                        print('Is super effective!')
+                        other_pokemon.lose_health(self.attack * 2)
+                    elif other_pokemon.type == 'Flying':
+                        immune(other_pokemon.name, self.name)
+                    else:
+                        print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
+                        other_pokemon.lose_health(self.attack)
+                case 'Flying':
+                    if other_pokemon.type == 'Electric' or other_pokemon.type == 'Rock':
+                        print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
+                        print('Is not very effective!')
+                        other_pokemon.lose_health(self.attack * 0.5)
+                    elif other_pokemon.type == 'Grass' or other_pokemon.type =='Fighting' or other_pokemon.type == 'Bug':
+                        print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
+                        print('Is super effective!')
+                        other_pokemon.lose_health(self.attack * 2)
+                    else:
+                        print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
+                        other_pokemon.lose_health(self.attack)
+                case 'Psychic':
+                    if other_pokemon.type == 'Psychic':
+                        print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
+                        print('Is not very effective!')
+                        other_pokemon.lose_health(self.attack * 0.5)
+                    elif other_pokemon.type == 'Fighting' or other_pokemon.type == 'Poison':
+                        print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
+                        print('Is super effective!')
+                        other_pokemon.lose_health(self.attack * 2)
+                    else:
+                        print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
+                        other_pokemon.lose_health(self.attack)
+                case 'Bug':
+                    if other_pokemon.type == 'Fire' or other_pokemon.type == 'Fighting' or other_pokemon.type == 'Flying' or other_pokemon.type == 'Ghost':
+                        print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
+                        print('Is not very effective!')
+                        other_pokemon.lose_health(self.attack * 0.5)
+                    elif other_pokemon.type == 'Grass' or other_pokemon.type == 'Poison' or other_pokemon.type == 'Psychic':
+                        print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
+                        print('Is super effective!')
+                        other_pokemon.lose_health(self.attack * 2)
+                    else:
+                        print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
+                        other_pokemon.lose_health(self.attack)
+                case 'Rock':
+                    if other_pokemon.type == 'Fighting' or other_pokemon.type == 'Ground':
+                        print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
+                        print('Is not very effective!')
+                        other_pokemon.lose_health(self.attack * 0.5)
+                    elif other_pokemon.type == 'Fire' or other_pokemon.type == 'Ice' or other_pokemon.type == 'Flying' or other_pokemon.type == 'Bug':
+                        print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
+                        print('Is super effective!')
+                        other_pokemon.lose_health(self.attack * 2)
+                    else:
+                        print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
+                        other_pokemon.lose_health(self.attack)
+                case 'Ghost':
+                    if other_pokemon.type == 'Normal' or other_pokemon.type == 'Psychic':
+                        immune(other_pokemon.name, self.name)
+                    elif other_pokemon.type == 'Ghost':
+                        print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
+                        print('Is super effective!')
+                        other_pokemon.lose_health(self.attack * 2)
+                    else:
+                        print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
+                        other_pokemon.lose_health(self.attack)
+                case 'Dragon':
+                    if other_pokemon.type == 'Dragon':
+                        print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
+                        print('Is super effective!')
+                        other_pokemon.lose_health(self.attack * 2)
+                    else:
+                        print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
+                        other_pokemon.lose_health(self.attack)
+
+
+        
+def immune(pokemon_attacked, attacker):
+    print ('{pokemon_attacked} is immune to {attacker} attacks! Try attacking with other Pokemon'.format(pokemon_attacked = pokemon_attacked, attacker = attacker))
 
 def create_player():
     while True:
@@ -172,7 +386,7 @@ def create_player():
     trainer_pokemon = []
     for i in range(0,5,1):
         position = randint(0,150)
-        level = randint(1,10)
+        level = randint(5,15)
         trainer_pokemon.append(Pokemon(pokemon_list[position],pokemon_type[position], name, level))
 
 
@@ -224,14 +438,15 @@ def menu():
     # Decide who will have the first turn by guessing heads or tails
     print('\nNow let\'s decide who will have the first turn by tossing a coin.')
     turn = coinflip(player_one.name, player_two.name)
-    turn = 1
+    # turn = 1
     # Create logic for turn base combat between both trainers
     combat = True
     while combat == True:
         if turn == 1:
             decision = int(input('It\'s your turn {trainer1} your current active pokemon is {active_pokemon} what do you want to do?\n1. Attack\n2. Use potion\n3. Change Pokemon\n'.format(trainer1 = player_one.name, active_pokemon = player_one.pokemons[player_one.current_pokemon].name)))
             match decision:
-                case 1: print ('Attack!')
+                case 1:
+                    player_one.attack_other_player(player_two)
                 case 2: 
                     potion_was_used = player_one.use_potion()
                     if not potion_was_used: continue
@@ -241,7 +456,8 @@ def menu():
         elif turn == 2:
             decision = int(input('It\'s your turn {trainer2} your current active pokemon is {active_pokemon} what do you want to do?\n1. Attack\n2. Use potion\n3. Change Pokemon\n'.format(trainer2 = player_two.name, active_pokemon = player_two.pokemons[player_two.current_pokemon].name)))
             match decision:
-                case 1: print ('Attack!')
+                case 1: 
+                    player_two.attack_other_player(player_one)
                 case 2:
                     potion_was_used = player_two.use_potion()
                     if not potion_was_used: continue
