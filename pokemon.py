@@ -1,6 +1,12 @@
+"""
+Author: Nicolas Agudelo
+Project guidelines at: https://www.codecademy.com/paths/computer-science/tracks/cspath-cs-101/modules/cspath-object-oriented-programming/projects/create-a-game-using-classes-and-objects
+"""
+
 
 from random import randint
 from random import random
+from sys import exit 
 
 pokemon_list = ['Bulbasaur','Ivysaur','Venusaur','Charmander†','Charmeleon','Charizard','Squirtle','Wartortle','Blastoise','Caterpie','Metapod','Butterfree','Weedle','Kakuna','Beedrill','Pidgey','Pidgeotto','Pidgeot','Rattata','Raticate','Spearow','Fearow','Ekans','Arbok','Pikachu','Raichu','Sandshrew','Sandslash','Nidoran♀','Nidorina','Nidoqueen','Nidoran♂','Nidorino','Nidoking','Clefairy','Clefable','Vulpix','Ninetales','Jigglypuff','Wigglytuff','Zubat','Golbat','Oddish','Gloom','Vileplume','Paras','Parasect','Venonat','Venomoth','Diglett','Dugtrio','Meowth','Persian','Psyduck','Golduck','Mankey','Primeape','Growlithe','Arcanine','Poliwag','Poliwhirl','Poliwrath','Abra','Kadabra','Alakazam','Machop','Machoke','Machamp','Bellsprout','Weepinbell','Victreebel','Tentacool','Tentacruel','Geodude','Graveler','Golem','Ponyta','Rapidash','Slowpoke','Slowbro','Magnemite','Magneton','Farfetch','Doduo','Dodrio','Seel','Dewgong','Grimer','Muk','Shellder','Cloyster','Gastly','Haunter','Gengar','Onix','Drowzee','Hypno','Krabby','Kingler','Voltorb','Electrode','Exeggcute','Exeggutor','Cubone','Marowak','Hitmonlee','Hitmonchan','Lickitung','Koffing','Weezing','Rhyhorn','Rhydon','Chansey','Tangela','Kangaskhan','Horsea','Seadra','Goldeen','Seaking','Staryu','Starmie','Mr. Mime','Scyther','Jynx','Electabuzz','Magmar','Pinsir','Tauros','Magikarp','Gyarados','Lapras','Ditto','Eeveedagger','Vaporeon','Jolteon','Flareon','Porygon','Omanyte','Omastar','Kabuto','Kabutops','Aerodactyl','Snorlax','Articuno','Zapdos','Moltres','Dratini','Dragonair','Dragonite','Mewtwo','Mew']
 pokemon_type = ['Grass', 'Grass', 'Grass', 'Fire', 'Fire', 'Fire', 'Water', 'Water', 'Water', 'Bug', 'Bug', 'Bug', 'Bug', 'Bug', 'Bug', 'Normal', 'Normal', 'Normal', 'Normal', 'Normal', 'Normal', 'Normal', 'Poison', 'Poison', 'Electric', 'Electric', 'Ground', 'Ground', 'Poison', 'Poison', 'Poison', 'Poison', 'Poison', 'Poison', 'Fairy', 'Fairy', 'Fire', 'Fire', 'Normal', 'Normal', 'Poison', 'Poison', 'Grass', 'Grass', 'Grass', 'Bug', 'Bug', 'Bug', 'Bug', 'Ground', 'Ground', 'Normal', 'Normal', 'Water', 'Water', 'Fighting', 'Fighting', 'Fire', 'Fire', 'Water', 'Water', 'Water', 'Psychic', 'Psychic', 'Psychic', 'Fighting', 'Fighting', 'Fighting', 'Grass', 'Grass', 'Grass', 'Water', 'Water', 'Rock', 'Rock', 'Rock', 'Fire', 'Fire', 'Water', 'Water', 'Electric', 'Electric', 'Normal', 'Normal', 'Normal', 'Water', 'Water', 'Poison', 'Poison', 'Water', 'Water', 'Ghost', 'Ghost', 'Ghost', 'Rock', 'Psychic', 'Psychic', 'Water', 'Water', 'Electric', 'Electric', 'Grass', 'Grass', 'Ground', 'Ground', 'Fighting', 'Fighting', 'Normal', 'Poison', 'Poison', 'Ground', 'Ground', 'Normal', 'Grass', 'Normal', 'Water', 'Water', 'Water', 'Water', 'Water', 'Water', 'Psychic', 'Bug', 'Ice', 'Electric', 'Fire', 'Bug', 'Normal', 'Water', 'Water', 'Water', 'Normal', 'Normal', 'Water', 'Electric', 'Fire', 'Normal', 'Rock', 'Rock', 'Rock', 'Rock', 'Rock', 'Normal', 'Ice', 'Electric', 'Fire', 'Dragon', 'Dragon', 'Dragon', 'Psychic', 'Psychic']
@@ -21,6 +27,7 @@ class Player:
         return('The current active pokemon is {pokemon}'.format(pokemon = self.pokemons[self.current_pokemon].name))
 
     def switch_pokemon(self):
+        counter = 0
         while True:
             print('What pokemon do you want to choose as your active pokemon now?\n')
             print('Write the number next to the pokemon you want to choose.\n')
@@ -28,10 +35,13 @@ class Player:
             # We let the player know what pokemons he have and in which position they are so he can choose which pokemon he want to set as active
             for pokemon in self.pokemons:
                 if pokemon.isFaint == True:
-                    print (index, pokemon.name, 'level:', pokemon.level ,'(fainted)') 
+                    print (index, pokemon.name, 'level:', pokemon.level ,'(fainted)')
+                    counter += 1 
                 else:
                     print (index, pokemon.name, 'level:', pokemon.level, 'current HP:', pokemon.health,'/',pokemon.max_health)
                 index += 1
+            if counter == 5:
+                return True
             try:
                 active = int(input('\n')) - 1
                 # we check that the number is not lower than 0 and not greater than the size of the list with the pokemons
@@ -53,6 +63,7 @@ class Player:
                 else: 
                     self.current_pokemon = active
                     print('{trainer}: Go {pokemon} I choose you!'.format(trainer = self.name, pokemon = self.pokemons[self.current_pokemon].name))
+                    return False 
                     break
             except ValueError:
                 print('Please choose using only numbers. Select the pokemon you want by typing the number next to it\'s name')
@@ -106,7 +117,7 @@ class Player:
         # Your current pokemon attacks the other trainer's current pokemon
         my_pokemon = self.pokemons[self.current_pokemon]
         their_pokemon = other_player.pokemons[other_player.current_pokemon]
-        my_pokemon.attack_other_pokemon(their_pokemon)
+        my_pokemon.attack_other_pokemon(their_pokemon, other_player)
 
 
 class Pokemon:
@@ -151,13 +162,15 @@ class Pokemon:
             return True
         return False
 
-    def lose_health(self, damage):
+    def lose_health(self, damage, trainer_receiving_attack):
         # We calculate the damage to the pokemon after the attack
         self.health -= damage
         # Check if the pokemon fainted
         if self.health <=0:
             self.health = 0
             self.Faint()
+            game_over = trainer_receiving_attack.switch_pokemon()
+            if game_over: gameover(trainer_receiving_attack.name)
         else:
             print('{pokemon} has taken {damage} damage, it has {health} points remaining'.format(pokemon = self.name, damage = damage, health = self.health))
 
@@ -170,7 +183,7 @@ class Pokemon:
 
 
 
-    def attack_other_pokemon(self, other_pokemon):
+    def attack_other_pokemon(self, other_pokemon, other_player):
         dodge = other_pokemon.dodge()
         if dodge:
             print ('{pokemon_attacked} is too fast!, he dodged {attacker} attack!'.format(pokemon_attacked = other_pokemon.name, attacker = self.name))
@@ -181,182 +194,200 @@ class Pokemon:
                     if other_pokemon.type == 'Rock':
                         print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
                         print('Is not very effective!')
-                        other_pokemon.lose_health(self.attack * 0.5)
+                        other_pokemon.lose_health(self.attack * 0.5, other_player)
                     elif other_pokemon.type == 'Ghost':
                         print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
                         immune(other_pokemon.name, self.name)
                     else: 
                         print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
-                        other_pokemon.lose_health(self.attack)
+                        other_pokemon.lose_health(self.attack, other_player)
                 case 'Fire':
                     if other_pokemon.type == 'Fire' or other_pokemon.type == 'Water' or other_pokemon.type == 'Rock' or other_pokemon.type == 'Dragon':
                         print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
                         print('Is not very effective!')
-                        other_pokemon.lose_health(self.attack * 0.5)
+                        other_pokemon.lose_health(self.attack * 0.5, other_player)
                     elif other_pokemon.type == 'Grass' or other_pokemon.type == 'Ice' or other_pokemon.type == 'Bug':
                         print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
                         print('Is super effective!')
-                        other_pokemon.lose_health(self.attack * 2)
+                        other_pokemon.lose_health(self.attack * 2, other_player)
                     else:
                         print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
-                        other_pokemon.lose_health(self.attack)
+                        other_pokemon.lose_health(self.attack, other_player)
                 case 'Water':
                     if other_pokemon.type == 'Water' or other_pokemon.type == 'Grass' or other_pokemon.type == 'Dragon':
                         print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
                         print('Is not very effective!')
-                        other_pokemon.lose_health(self.attack * 0.5)
+                        other_pokemon.lose_health(self.attack * 0.5, other_player)
                     elif other_pokemon.type == 'Fire' or other_pokemon.type == 'Ground' or other_pokemon.type == 'Rock':
                         print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
                         print('Is super effective!')
-                        other_pokemon.lose_health(self.attack * 2)
+                        other_pokemon.lose_health(self.attack * 2, other_player)
                     else:
                         print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
-                        other_pokemon.lose_health(self.attack)
+                        other_pokemon.lose_health(self.attack, other_player)
                 case 'Electric':
                     if other_pokemon.type == 'Electric' or  other_pokemon.type == 'Grass' or  other_pokemon.type == 'Dragon':
                         print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
                         print('Is not very effective!')
-                        other_pokemon.lose_health(self.attack * 0.5)
+                        other_pokemon.lose_health(self.attack * 0.5, other_player)
                     elif  other_pokemon.type == 'Water' or  other_pokemon.type == 'Flying':
                         print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
                         print('Is super effective!')
-                        other_pokemon.lose_health(self.attack * 2)
+                        other_pokemon.lose_health(self.attack * 2, other_player)
                     elif other_pokemon.type == 'Ground':
                         immune(other_pokemon.name, self.name)
                     else:
                         print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
-                        other_pokemon.lose_health(self.attack)
+                        other_pokemon.lose_health(self.attack, other_player)
                 case 'Grass':
                     if other_pokemon.type == 'Fire' or other_pokemon.type == 'Grass' or  other_pokemon.type == 'Poison' or  other_pokemon.type == 'Flying' or  other_pokemon.type == 'Bug' or  other_pokemon.type == 'Dragon':
                         print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
                         print('Is not very effective!')
-                        other_pokemon.lose_health(self.attack * 0.5)
+                        other_pokemon.lose_health(self.attack * 0.5, other_player)
                     elif  other_pokemon.type == 'Water' or  other_pokemon.type == 'Ground' or  other_pokemon.type == 'Rock':
                         print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
                         print('Is super effective!')
-                        other_pokemon.lose_health(self.attack * 2)
+                        other_pokemon.lose_health(self.attack * 2, other_player)
                     else:
                         print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
-                        other_pokemon.lose_health(self.attack)
+                        other_pokemon.lose_health(self.attack, other_player)
                 case 'Ice':
                     if other_pokemon.type == 'Water' or other_pokemon.type == 'Ice':
                         print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
                         print('Is not very effective!')
-                        other_pokemon.lose_health(self.attack * 0.5)
+                        other_pokemon.lose_health(self.attack * 0.5, other_player)
                     elif other_pokemon.type == 'Grass' or other_pokemon.type == 'Ground' or other_pokemon.type == 'Flying' or other_pokemon.type == 'Dragon':
                         print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
                         print('Is super effective!')
-                        other_pokemon.lose_health(self.attack * 2)
+                        other_pokemon.lose_health(self.attack * 2, other_player)
                     else:
                         print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
-                        other_pokemon.lose_health(self.attack)
+                        other_pokemon.lose_health(self.attack, other_player)
                 case 'Fighting':
                     if other_pokemon.type == 'Poison' or  other_pokemon.type == 'Flying' or  other_pokemon.type == 'Psychic' or other_pokemon.type == 'Bug':
                         print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
                         print('Is not very effective!')
-                        other_pokemon.lose_health(self.attack * 0.5)
+                        other_pokemon.lose_health(self.attack * 0.5, other_player)
                     elif other_pokemon.type == 'Normal' or  other_pokemon.type == 'Ice' or  other_pokemon.type == 'Rock':
                         print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
                         print('Is super effective!')
-                        other_pokemon.lose_health(self.attack * 2)
+                        other_pokemon.lose_health(self.attack * 2, other_player)
                     elif other_pokemon.type == 'Ghost':
                         immune(other_pokemon.name, self.name)
                     else:
                         print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
-                        other_pokemon.lose_health(self.attack)
+                        other_pokemon.lose_health(self.attack, other_player)
                 case 'Poison':
                     if  other_pokemon.type == 'Poison' or  other_pokemon.type == 'Ground' or  other_pokemon.type == 'Rock' or  other_pokemon.type == 'Ghost':
                         print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
                         print('Is not very effective!')
-                        other_pokemon.lose_health(self.attack * 0.5)
+                        other_pokemon.lose_health(self.attack * 0.5, other_player)
                     elif  other_pokemon.type == 'Grass' or  other_pokemon.type == 'Bug':
                         print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
                         print('Is super effective!')
-                        other_pokemon.lose_health(self.attack * 2)
+                        other_pokemon.lose_health(self.attack * 2, other_player)
                     else:
                         print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
-                        other_pokemon.lose_health(self.attack)
+                        other_pokemon.lose_health(self.attack, other_player)
                 case 'Ground':
                     if other_pokemon.type == 'Grass' or other_pokemon.type == 'Bug':
                         print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
                         print('Is not very effective!')
-                        other_pokemon.lose_health(self.attack * 0.5)
+                        other_pokemon.lose_health(self.attack * 0.5, other_player)
                     elif other_pokemon.type == 'Fire' or other_pokemon.type == 'Electric' or other_pokemon.type == 'Poison' or other_pokemon.type == 'Rock':
                         print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
                         print('Is super effective!')
-                        other_pokemon.lose_health(self.attack * 2)
+                        other_pokemon.lose_health(self.attack * 2, other_player)
                     elif other_pokemon.type == 'Flying':
                         immune(other_pokemon.name, self.name)
                     else:
                         print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
-                        other_pokemon.lose_health(self.attack)
+                        other_pokemon.lose_health(self.attack, other_player)
                 case 'Flying':
                     if other_pokemon.type == 'Electric' or other_pokemon.type == 'Rock':
                         print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
                         print('Is not very effective!')
-                        other_pokemon.lose_health(self.attack * 0.5)
+                        other_pokemon.lose_health(self.attack * 0.5, other_player)
                     elif other_pokemon.type == 'Grass' or other_pokemon.type =='Fighting' or other_pokemon.type == 'Bug':
                         print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
                         print('Is super effective!')
-                        other_pokemon.lose_health(self.attack * 2)
+                        other_pokemon.lose_health(self.attack * 2, other_player)
                     else:
                         print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
-                        other_pokemon.lose_health(self.attack)
+                        other_pokemon.lose_health(self.attack, other_player)
                 case 'Psychic':
                     if other_pokemon.type == 'Psychic':
                         print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
                         print('Is not very effective!')
-                        other_pokemon.lose_health(self.attack * 0.5)
+                        other_pokemon.lose_health(self.attack * 0.5, other_player)
                     elif other_pokemon.type == 'Fighting' or other_pokemon.type == 'Poison':
                         print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
                         print('Is super effective!')
-                        other_pokemon.lose_health(self.attack * 2)
+                        other_pokemon.lose_health(self.attack * 2, other_player)
                     else:
                         print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
-                        other_pokemon.lose_health(self.attack)
+                        other_pokemon.lose_health(self.attack, other_player)
                 case 'Bug':
                     if other_pokemon.type == 'Fire' or other_pokemon.type == 'Fighting' or other_pokemon.type == 'Flying' or other_pokemon.type == 'Ghost':
                         print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
                         print('Is not very effective!')
-                        other_pokemon.lose_health(self.attack * 0.5)
+                        other_pokemon.lose_health(self.attack * 0.5, other_player)
                     elif other_pokemon.type == 'Grass' or other_pokemon.type == 'Poison' or other_pokemon.type == 'Psychic':
                         print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
                         print('Is super effective!')
-                        other_pokemon.lose_health(self.attack * 2)
+                        other_pokemon.lose_health(self.attack * 2, other_player)
                     else:
                         print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
-                        other_pokemon.lose_health(self.attack)
+                        other_pokemon.lose_health(self.attack, other_player)
                 case 'Rock':
                     if other_pokemon.type == 'Fighting' or other_pokemon.type == 'Ground':
                         print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
                         print('Is not very effective!')
-                        other_pokemon.lose_health(self.attack * 0.5)
+                        other_pokemon.lose_health(self.attack * 0.5, other_player)
                     elif other_pokemon.type == 'Fire' or other_pokemon.type == 'Ice' or other_pokemon.type == 'Flying' or other_pokemon.type == 'Bug':
                         print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
                         print('Is super effective!')
-                        other_pokemon.lose_health(self.attack * 2)
+                        other_pokemon.lose_health(self.attack * 2, other_player)
                     else:
                         print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
-                        other_pokemon.lose_health(self.attack)
+                        other_pokemon.lose_health(self.attack, other_player)
                 case 'Ghost':
                     if other_pokemon.type == 'Normal' or other_pokemon.type == 'Psychic':
                         immune(other_pokemon.name, self.name)
                     elif other_pokemon.type == 'Ghost':
                         print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
                         print('Is super effective!')
-                        other_pokemon.lose_health(self.attack * 2)
+                        other_pokemon.lose_health(self.attack * 2, other_player)
                     else:
                         print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
-                        other_pokemon.lose_health(self.attack)
+                        other_pokemon.lose_health(self.attack, other_player)
                 case 'Dragon':
                     if other_pokemon.type == 'Dragon':
                         print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
                         print('Is super effective!')
-                        other_pokemon.lose_health(self.attack * 2)
+                        other_pokemon.lose_health(self.attack * 2, other_player)
+                    elif other_pokemon.type == 'Fairy':
+                        immune(other_pokemon.name, self.name)
                     else:
                         print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
-                        other_pokemon.lose_health(self.attack)
+                        other_pokemon.lose_health(self.attack, other_player)
+                case 'Fairy':
+                    if other_pokemon.type == 'Poison':
+                        print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
+                        print('Is not very effective!')
+                        other_pokemon.lose_health(self.attack * 0.5, other_player)
+                    elif other_pokemon.type == 'Fighting' or other_pokemon.type == 'Bug' or other_pokemon.type == 'Dragon':
+                        print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
+                        print('Is super effective!')
+                        other_pokemon.lose_health(self.attack * 2, other_player)
+                    else:
+                        print('{my_pokemon} attacked {their_pokemon}'.format(my_pokemon = self.name, their_pokemon = other_pokemon.name))
+                        other_pokemon.lose_health(self.attack, other_player)
 
+
+def gameover(loser):
+    input('\n\n{loser} has no more pokemons left to continue and has lost, combat finished!\n\nThanks for playing!\n\nPress any key to end the program'.format(loser = loser))
+    exit()
 
         
 def immune(pokemon_attacked, attacker):
@@ -451,7 +482,8 @@ def menu():
                     potion_was_used = player_one.use_potion()
                     if not potion_was_used: continue
                 case 3: 
-                    player_one.switch_pokemon()
+                    if player_one.switch_pokemon():
+                        gameover(player_one.name)
             turn = 2
         elif turn == 2:
             decision = int(input('It\'s your turn {trainer2} your current active pokemon is {active_pokemon} what do you want to do?\n1. Attack\n2. Use potion\n3. Change Pokemon\n'.format(trainer2 = player_two.name, active_pokemon = player_two.pokemons[player_two.current_pokemon].name)))
@@ -462,7 +494,8 @@ def menu():
                     potion_was_used = player_two.use_potion()
                     if not potion_was_used: continue
                 case 3: 
-                    player_two.switch_pokemon()
+                    if player_two.switch_pokemon():
+                        gameover(player_one.name)
             turn = 1
             # combat = False
 
